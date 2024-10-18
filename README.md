@@ -1,5 +1,3 @@
-# backend-projects-roadmap.sh
-This repository contains the implementations of various backend projects inspired by the Backend Developer Roadmap. 
 # Backend Projects Collection
 
 This repository contains the implementations of various backend projects inspired by the [Backend Developer Roadmap](https://roadmap.sh/backend/projects). Each project is designed to help developers solidify their understanding of key backend concepts, including APIs, databases, microservices, and more. The projects are built using various technologies and frameworks, making this a comprehensive resource for backend development.
