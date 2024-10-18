@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+/* ■■■■■■■■■■■■■■■■■■■■■■■■ Types ■■■■■■■■■■■■■■■■■■■■■■■ */
+
 // Task represents a single task in the tracker
 type Task struct {
 	ID          int       `json:"id"`
@@ -26,6 +28,48 @@ type TaskTracker struct {
 	Scanner  *bufio.Scanner
 }
 
+/* ■■■■■■■■■■■■■■■■■■■■■■■■ Main ■■■■■■■■■■■■■■■■■■■■■■■ */
+func main() {
+	tracker := NewTaskTracker()
+	if err := tracker.LoadTasks(); err != nil {
+		fmt.Printf("Error loading tasks: %v\n", err)
+		return
+	}
+
+	fmt.Println("Welcome to Task Tracker!")
+
+	for {
+		showMenu()
+		tracker.Scanner.Scan()
+		choice := tracker.Scanner.Text()
+
+		var err error
+		switch choice {
+		case "1":
+			err = tracker.AddTask()
+		case "2":
+			err = tracker.UpdateTask()
+		case "3":
+			err = tracker.DeleteTask()
+		case "4":
+			err = tracker.MarkTask()
+		case "5":
+			tracker.ListTasks()
+		case "6":
+			fmt.Println("Goodbye!")
+			return
+		default:
+			fmt.Println("Invalid choice. Please try again.")
+			continue
+		}
+
+		if err != nil {
+			fmt.Printf("Error: %v\n", err)
+		}
+	}
+}
+
+/* New Task --------------------------------------------- */
 // NewTaskTracker creates a new instance of TaskTracker
 func NewTaskTracker() *TaskTracker {
 	return &TaskTracker{
@@ -35,6 +79,7 @@ func NewTaskTracker() *TaskTracker {
 	}
 }
 
+/* Load TASKS ------------------------------------------- */
 // LoadTasks reads tasks from the JSON file
 func (t *TaskTracker) LoadTasks() error {
 	if _, err := os.Stat(t.Filename); os.IsNotExist(err) {
@@ -57,6 +102,7 @@ func (t *TaskTracker) LoadTasks() error {
 	return nil
 }
 
+/* SAVE TASK -------------------------------------------- */
 // SaveTasks writes tasks to the JSON file
 func (t *TaskTracker) SaveTasks() error {
 	data, err := json.MarshalIndent(t.Tasks, "", "    ")
@@ -72,6 +118,8 @@ func (t *TaskTracker) SaveTasks() error {
 	return nil
 }
 
+/* GET NEXT ID ------------------------------------------ */
+
 // GetNextID generates the next available task ID
 func (t *TaskTracker) GetNextID() int {
 	maxID := 0
@@ -83,6 +131,7 @@ func (t *TaskTracker) GetNextID() int {
 	return maxID + 1
 }
 
+/* ADD TASK --------------------------------------------- */
 // AddTask creates a new task
 func (t *TaskTracker) AddTask() error {
 	fmt.Print("Enter task description: ")
@@ -110,6 +159,7 @@ func (t *TaskTracker) AddTask() error {
 	return nil
 }
 
+/* FIND TASK -------------------------------------------- */
 // FindTask locates a task by ID
 func (t *TaskTracker) FindTask(id int) (*Task, int) {
 	for i, task := range t.Tasks {
@@ -120,6 +170,7 @@ func (t *TaskTracker) FindTask(id int) (*Task, int) {
 	return nil, -1
 }
 
+/* UPDATE TASK ------------------------------------------ */
 // UpdateTask modifies an existing task's description
 func (t *TaskTracker) UpdateTask() error {
 	fmt.Print("Enter task ID to update: ")
@@ -156,6 +207,8 @@ func (t *TaskTracker) UpdateTask() error {
 	return nil
 }
 
+/* DELETE TASK ------------------------------------------ */
+
 // DeleteTask removes a task
 func (t *TaskTracker) DeleteTask() error {
 	fmt.Print("Enter task ID to delete: ")
@@ -189,6 +242,8 @@ func (t *TaskTracker) DeleteTask() error {
 	fmt.Printf("Task %d deleted successfully\n", id)
 	return nil
 }
+
+/* TASK STATUS ------------------------------------------ */
 
 // MarkTask updates a task's status
 func (t *TaskTracker) MarkTask() error {
@@ -237,6 +292,8 @@ func (t *TaskTracker) MarkTask() error {
 	fmt.Printf("Task %d marked as %s\n", id, status)
 	return nil
 }
+
+/* LIST TASKS ------------------------------------------- */
 
 // ListTasks displays tasks, optionally filtered by status
 func (t *TaskTracker) ListTasks() {
@@ -294,44 +351,4 @@ func showMenu() {
 	fmt.Println("5. List tasks")
 	fmt.Println("6. Exit")
 	fmt.Print("Enter your choice (1-6): ")
-}
-
-func main() {
-	tracker := NewTaskTracker()
-	if err := tracker.LoadTasks(); err != nil {
-		fmt.Printf("Error loading tasks: %v\n", err)
-		return
-	}
-
-	fmt.Println("Welcome to Task Tracker!")
-
-	for {
-		showMenu()
-		tracker.Scanner.Scan()
-		choice := tracker.Scanner.Text()
-
-		var err error
-		switch choice {
-		case "1":
-			err = tracker.AddTask()
-		case "2":
-			err = tracker.UpdateTask()
-		case "3":
-			err = tracker.DeleteTask()
-		case "4":
-			err = tracker.MarkTask()
-		case "5":
-			tracker.ListTasks()
-		case "6":
-			fmt.Println("Goodbye!")
-			return
-		default:
-			fmt.Println("Invalid choice. Please try again.")
-			continue
-		}
-
-		if err != nil {
-			fmt.Printf("Error: %v\n", err)
-		}
-	}
 }
