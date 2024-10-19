@@ -8,7 +8,9 @@ This repository is a comprehensive collection of backend projects built using **
 - Working with caching systems like Redis
 - Building and scaling microservices
 
-## 1. Project: Task Tracker
+## 1. Project: [Task Tracker](https://github.com/amir-khaleghi/backend-projects-roadmap.sh/tree/main/1-task-tracker)
+
+[Project URL](https://roadmap.sh/projects/task-tracker)
 
 The **Task Tracker** project is a command-line interface (CLI) application used to track and manage tasks in your to-do list. This project helps you practice essential programming skills like handling user input, working with the filesystem, and building a robust CLI app.
 
@@ -27,30 +29,34 @@ The **Task Tracker** project is a command-line interface (CLI) application used 
 ### How to Get Started with the Task Tracker:
 
 1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/your-username/go-backend-projects.git
-    ```
+
+   ```bash
+   git clone https://github.com/your-username/go-backend-projects.git
+   ```
 
 2. **Navigate to the Task Tracker project**:
-    ```bash
-    cd go-backend-projects/task-tracker
-    ```
+
+   ```bash
+   cd go-backend-projects/task-tracker
+   ```
 
 3. **Install dependencies**:
-    ```bash
-    go mod tidy
-    ```
+
+   ```bash
+   go mod tidy
+   ```
 
 4. **Run the Task Tracker CLI**:
-    ```bash
-    go run main.go
-    ```
+
+   ```bash
+   go run main.go
+   ```
 
 5. **Testing** (if applicable):
-    You can run the tests using:
-    ```bash
-    go test ./...
-    ```
+   You can run the tests using:
+   ```bash
+   go test ./...
+   ```
 
 ## Technologies Used
 
